@@ -4,61 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mahej Gym</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto&display=swap" rel="stylesheet">
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-        #gameArea {
-            position: relative;
-            width: 600px;
-            height: 400px;
-            border: 2px solid #333;
-            background-color: #fff;
-            overflow: hidden;
-            margin-right: 20px; 
-        }
+            body {
+                background-color: #f0f0f0;
+                font-family: "Roboto", sans-serif; 
+                overflow: auto; 
+                margin: 0; 
+            }
+
+            #title {
+                font-size: 40px;
+                font-family: "Jersey 10", sans-serif; 
+                text-align: center; 
+                margin-top: 20px; 
+            }
+
+            #gameArea {
+                position: relative;
+                width: 800px; 
+                height: 700px; 
+                border: 2px solid #333;
+                background-image: url('background.png'); 
+                background-size: cover; 
+                background-position: center; 
+                background-repeat: no-repeat; 
+                overflow: hidden; 
+                margin: 20px auto; 
+            }
+
         .enemy {
             position: absolute;
-            width: 100px; 
-            height: 100px; 
+            width: 200px; 
+            height: 200px; 
             background-image: url('normal.png'); 
             background-size: cover; 
-            top: 150px; 
-            left: 250px; 
-        }
-        #status {
-            height: 200px;
-            width: 200px;
-            font-size: 20px;
-            line-height: 1.5;
-        }
-        #healthBars {
-            width: 600px;
-            margin-top: 20px;
+            top: 40%; 
+            left: 45%; 
         }
         .healthBar {
             height: 20px;
-            background-color: green;
-            margin-bottom: 5px;
+            
+            
         }
+
+        #uiBorder{
+            border-radius: 2px;
+            border-color: black;
+            border: solid;
+            background-color: black;
+        }
+
+        #ui{
+            height: 150px;
+        }
+        
+        #fn {
+            font-size: 40px;
+            font-family: "Jersey 10", sans-serif; 
+            text-align: center; 
+            margin-top: 2px; 
+            color: white;
+            margin-bottom: 0px;
+        }
+        .no-margin {
+            margin: 0 !important; 
+        }
+
+        .middleclock{
+            font-size: 40px;
+            font-family: "Jersey 10", sans-serif; 
+            text-align: center; 
+            margin-top: 2px; 
+            color: white;
+            margin-bottom: 0px;
+            background-color: black;
+            border: solid;
+            border-radius: 2px;
+            border-color: #333;
+        }
+        
     </style>
 </head>
 <body>
-    <div id="gameArea">
-        <div id="enemy" class="enemy"></div>
-    </div>
-    <div id="status">
-        <div>Status: Attack</div>
-        <div id="actionMessage"></div>
-    </div>
-    <div id="healthBars">
-        <div id="playerHealth" class="healthBar" style="width: 100%;"></div>
-        <div id="enemyHealth" class="healthBar" style="width: 100%;"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="row">
+                    <div id="title"  >
+                        <h>Mahej's Boxing Gym</h>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="gameArea">
+                        
+                        <div id= "ui" class="row">
+                            
+                            <div class="col-5">
+                                <div id="uiBorder">
+                                    <div id="fn"><p class="no-margin">PLAYER</p></div>
+                                    <div id="playerHealth" class="healthBar bg-success" style="width: 100%;"></div>
+                                </div>
+
+                            </div>
+                            <div class="col-2 text-center">
+                                <div id="clock" class="middleclock"> 69 </div>
+                            </div>
+                            <div class="col-5">
+                                <div id="uiBorder">
+                                    <div id="fn"><p class="no-margin">TYSON</p></div>
+                                    <div id="enemyHealth" class="healthBar bg-success" style="width: 100%;"></div>
+                                    
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        
+                        <div id="enemy" class="enemy"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="status" class="mb-2">
+                        <div>Status: Attack</div>
+                        <div id="actionMessage"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
     </div>
 
     <script>
@@ -70,23 +148,36 @@
         let enemyHealth = 100;
         
 
-        //Funkce na update health baru
+        
         function updateHealthBars() {
-            const playerHealthBar = document.getElementById('playerHealth');
-            const enemyHealthBar = document.getElementById('enemyHealth');
+        const playerHealthBar = document.getElementById('playerHealth');
+        const enemyHealthBar = document.getElementById('enemyHealth');
 
-            playerHealthBar.style.width = playerHealth + '%';
-            enemyHealthBar.style.width = enemyHealth + '%';
+        playerHealthBar.style.width = playerHealth + '%';
+        enemyHealthBar.style.width = enemyHealth + '%';
 
-            
-            if (playerHealth < 50) playerHealthBar.style.backgroundColor = 'orange';
-            if (playerHealth < 20) playerHealthBar.style.backgroundColor = 'red';
-            if (enemyHealth < 50) enemyHealthBar.style.backgroundColor = 'orange';
-            if (enemyHealth < 20) enemyHealthBar.style.backgroundColor = 'red';
+        
+        playerHealthBar.className = 'healthBar'; 
+        if (playerHealth < 20) {
+            playerHealthBar.classList.add('bg-danger');
+        } else if (playerHealth < 50) {
+            playerHealthBar.classList.add('bg-warning');
+        } else {
+            playerHealthBar.classList.add('bg-success');
         }
 
+        
+        enemyHealthBar.className = 'healthBar'; 
+        if (enemyHealth < 20) {
+            enemyHealthBar.classList.add('bg-danger');
+        } else if (enemyHealth < 50) {
+            enemyHealthBar.classList.add('bg-warning');
+        } else {
+            enemyHealthBar.classList.add('bg-success');
+        }
+        }
 
-        //cyklus pro deffend enemy
+        
         function startAttackDefenseCycle() {
             setInterval(() => {
                 if (!isDefending) {
@@ -97,9 +188,9 @@
                         isDefending = false;
                         actionMessage.innerText = 'Enemy is attacking!';
                         enemy.style.backgroundImage = "url('normal.png')"; 
-                    }, 2000); //Doba deffendu
+                    }, 2000); 
                 }
-            }, 5000); //jak často deffendi
+            }, 5000); 
         }
 
         document.addEventListener('click', function() {
@@ -122,12 +213,11 @@
                     setTimeout(() => {
                         isDefending = false;
                         actionMessage.innerText = 'You are back to attacking!';
-                    }, 2000); //Jak dlouho deffendi hráč
+                    }, 2000); 
                 }
             }
         });
 
-        
         updateHealthBars();
         startAttackDefenseCycle();
     </script>
