@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahej Gym</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #gameArea {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            border: 2px solid #333;
+            background-color: #fff;
+            overflow: hidden;
+            margin-right: 20px; 
+        }
+        .enemy {
+            position: absolute;
+            width: 100px; 
+            height: 100px; 
+            background-image: url('normal.png'); 
+            background-size: cover; 
+            top: 150px; 
+            left: 250px; 
+        }
+        #status {
+            height: 200px;
+            width: 200px;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+        #healthBars {
+            width: 600px;
+            margin-top: 20px;
+        }
+        .healthBar {
+            height: 20px;
+            background-color: green;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameArea">
+        <div id="enemy" class="enemy"></div>
+    </div>
+    <div id="status">
+        <div>Status: Attack</div>
+        <div id="actionMessage"></div>
+    </div>
+    <div id="healthBars">
+        <div id="playerHealth" class="healthBar" style="width: 100%;"></div>
+        <div id="enemyHealth" class="healthBar" style="width: 100%;"></div>
+    </div>
+
+    <script>
+        const enemy = document.getElementById('enemy');
+        const statusDisplay = document.getElementById('status');
+        const actionMessage = document.getElementById('actionMessage');
+        let isDefending = false;
+        let playerHealth = 100;
+        let enemyHealth = 100;
+        
+
+        //Funkce na update health baru
+        function updateHealthBars() {
+            const playerHealthBar = document.getElementById('playerHealth');
+            const enemyHealthBar = document.getElementById('enemyHealth');
+
+            playerHealthBar.style.width = playerHealth + '%';
+            enemyHealthBar.style.width = enemyHealth + '%';
+
+            
+            if (playerHealth < 50) playerHealthBar.style.backgroundColor = 'orange';
+            if (playerHealth < 20) playerHealthBar.style.backgroundColor = 'red';
+            if (enemyHealth < 50) enemyHealthBar.style.backgroundColor = 'orange';
+            if (enemyHealth < 20) enemyHealthBar.style.backgroundColor = 'red';
+        }
+
+
+        //cyklus pro deffend enemy
+        function startAttackDefenseCycle() {
+            setInterval(() => {
+                if (!isDefending) {
+                    isDefending = true;
+                    actionMessage.innerText = 'Enemy is defending!';
+                    enemy.style.backgroundImage = "url('attack.png')"; 
+                    setTimeout(() => {
+                        isDefending = false;
+                        actionMessage.innerText = 'Enemy is attacking!';
+                        enemy.style.backgroundImage = "url('normal.png')"; 
+                    }, 2000); //Doba deffendu
+                }
+            }, 5000); //jak často deffendi
+        }
+
+        document.addEventListener('click', function() {
+            if (!isDefending) {
+                actionMessage.innerText = 'You attacked!';
+                enemyHealth -= 10; 
+                updateHealthBars();
+            } else {
+                actionMessage.innerText = 'Cannot attack while defending!';
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.code === 'Space') {
+                if (isDefending) {
+                    actionMessage.innerText = 'You are already defending!';
+                } else {
+                    isDefending = true;
+                    actionMessage.innerText = 'You are defending!';
+                    setTimeout(() => {
+                        isDefending = false;
+                        actionMessage.innerText = 'You are back to attacking!';
+                    }, 2000); //Jak dlouho deffendi hráč
+                }
+            }
+        });
+
+        
+        updateHealthBars();
+        startAttackDefenseCycle();
+    </script>
+</body>
+</html>
