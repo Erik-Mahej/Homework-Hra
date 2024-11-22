@@ -31,24 +31,25 @@
                 background-image: url('background.png'); 
                 background-size: cover; 
                 background-position: center; 
-                background-repeat: no-repeat; 
+                background-repeat: no-repeat;
                 overflow: hidden; 
                 margin: 20px auto; 
             }
+            .enemy {
+                position: absolute;
+                width: 180px; 
+                height: 336px; 
+                background-image: url('MikeNormal.png'); 
+                background-size: contain; 
+                background-repeat: no-repeat; 
+                background-position: center; 
+                top: 20%; 
+                left: 55%; 
+                cursor: url('cursor1.cur'), auto; 
+            }
 
-        .enemy {
-            position: absolute;
-            width: 200px; 
-            height: 200px; 
-            background-image: url('normal.png'); 
-            background-size: cover; 
-            top: 40%; 
-            left: 45%; 
-        }
         .healthBar {
-            height: 20px;
-            
-            
+            height: 20px;  
         }
 
         #uiBorder{
@@ -146,6 +147,7 @@
         let isDefending = false;
         let playerHealth = 100;
         let enemyHealth = 100;
+        let isClicked = false; 
         
 
         
@@ -183,25 +185,26 @@
                 if (!isDefending) {
                     isDefending = true;
                     actionMessage.innerText = 'Enemy is defending!';
-                    enemy.style.backgroundImage = "url('attack.png')"; 
+                    enemy.style.backgroundImage = "url('MikeDeff.png')"; 
                     setTimeout(() => {
                         isDefending = false;
                         actionMessage.innerText = 'Enemy is attacking!';
-                        enemy.style.backgroundImage = "url('normal.png')"; 
+                        enemy.style.backgroundImage = "url('MikeNormal.png')"; 
                     }, 2000); 
                 }
             }, 5000); 
         }
 
-        document.addEventListener('click', function() {
-            if (!isDefending) {
-                actionMessage.innerText = 'You attacked!';
-                enemyHealth -= 10; 
-                updateHealthBars();
-            } else {
-                actionMessage.innerText = 'Cannot attack while defending!';
-            }
-        });
+        enemy.addEventListener('click', function() {
+    if (isDefending) {
+        actionMessage.innerText = 'The enemy is defending! You cannot hit them.';
+    } else {
+        actionMessage.innerText = 'You hit the enemy!'; 
+        enemyHealth -= 10; 
+        if (enemyHealth < 0) enemyHealth = 0; 
+        updateHealthBars(); 
+    }
+});
 
         document.addEventListener('keydown', function(event) {
             if (event.code === 'Space') {
@@ -216,6 +219,20 @@
                     }, 2000); 
                 }
             }
+        });
+
+        enemy.addEventListener('mousedown', function() {
+        enemy.style.cursor = "url('cursor2.cur'), auto"; 
+        });
+
+        
+        enemy.addEventListener('mouseup', function() {
+            enemy.style.cursor = "url('cursor1.cur'), auto"; 
+        });
+
+        
+        enemy.addEventListener('mouseleave', function() {
+            enemy.style.cursor = "url('cursor1.cur'), auto"; 
         });
 
         updateHealthBars();
