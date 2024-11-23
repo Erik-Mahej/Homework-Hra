@@ -57,6 +57,7 @@ function startAttackDefenseCycle() {
             stopIdleAnimation(); 
             actionMessage.innerText = 'Enemy is defending!';
             enemy.style.backgroundImage = "url('MikeSprite/MikeDefend.png')"; 
+
             setTimeout(() => {
                 isDefending = false;
                 actionMessage.innerText = 'Enemy is attacking!';
@@ -94,6 +95,68 @@ enemy.addEventListener('click', function() {
         },  1000); 
     }
 });
+
+function enemyAttack() {
+    if (!isDefending) {
+        
+        const attackWarning = document.getElementById('attackWarning');
+        attackWarning.style.display = 'block'; 
+
+        
+        setTimeout(() => {
+            
+            const attackImages = ['MikeSprite/attack1.png', 'MikeSprite/attack2.png'];
+            const randomAttackImage = attackImages[Math.floor(Math.random() * attackImages.length)];
+
+           
+            enemy.style.backgroundImage = `url('${randomAttackImage}')`; 
+
+            
+            playerHealth -= 10; 
+            console.log('Mike Tyson attacked! Player health:', playerHealth);
+            updateHealthBars(); 
+
+            
+            if (playerHealth <= 0) {
+                alert('You lost!'); 
+                resetGame(); 
+            }
+
+            
+            attackWarning.style.display = 'none'; 
+
+            
+            stopIdleAnimation();
+            startTauntAnimation();
+
+           
+            setTimeout(() => {
+                enemy.style.backgroundImage = "url('MikeSprite/idle1.png')"; 
+                startIdleAnimation(); 
+            }, 2000); 
+        }, 500); 
+    }
+}
+
+function startTauntAnimation() {
+    const tauntImages = ['MikeSprite/Taunt1.png', 'MikeSprite/Taunt2.png'];
+    let tauntIndex = 0;
+    let tauntCount = 0;
+    const tauntInterval = setInterval(() => {
+        enemy.style.backgroundImage = `url('${tauntImages[tauntIndex]}')`;
+        tauntIndex = (tauntIndex + 1) % tauntImages.length;
+
+        
+        if (tauntIndex === 0) {
+            tauntCount++;
+        }
+        if (tauntCount === 2) {
+            clearInterval(tauntInterval); 
+        }
+    }, 300); 
+}
+
+setInterval(enemyAttack, 3000); 
 
 
 startIdleAnimation();

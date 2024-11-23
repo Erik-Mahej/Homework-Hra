@@ -35,6 +35,19 @@
             overflow: hidden; 
             margin: 20px auto;
         }
+
+        .player {
+            position: absolute;
+            width: 160px; 
+            height: 320px; 
+            background-image: url('PlayerSprite/idle1.png'); 
+            background-size: contain; 
+            background-repeat: no-repeat; 
+            background-position: center; 
+            bottom: 50px; 
+            left: 250px; 
+        }
+
         .enemy {
             position: absolute;
             width: 180px; 
@@ -43,8 +56,8 @@
             background-size: contain; 
             background-repeat: no-repeat; 
             background-position: center; 
-            top: 20%; 
-            left: 55%; 
+            top: 15%; 
+            left: 47%; 
             cursor: url('assets/cursor1.cur'), auto; 
         }
 
@@ -87,6 +100,13 @@
             border-radius: 2px;
             border-color: #333;
         }
+
+        .warningat{
+            font-size: 100px;
+            position: absolute;
+            left: 30%;
+            color: red;
+        }
         
     </style>
 </head>
@@ -119,7 +139,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="player" class="player"></div>
                         <div id="enemy" class="enemy"></div>
+                        <div id="attackWarning" class="warningat">!</div>
                     </div>
                 </div>
                 <div class="row">
