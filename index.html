@@ -9,44 +9,44 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Roboto&display=swap" rel="stylesheet">
     <style>
-            body {
-                background-color: #f0f0f0;
-                font-family: "Roboto", sans-serif; 
-                overflow: auto; 
-                margin: 0; 
-            }
+        body {
+            background-color: #f0f0f0;
+            font-family: "Roboto", sans-serif; 
+            overflow: auto; 
+            margin: 0; 
+        }
 
-            #title {
-                font-size: 40px;
-                font-family: "Jersey 10", sans-serif; 
-                text-align: center; 
-                margin-top: 20px; 
-            }
+        #title {
+            font-size: 40px;
+            font-family: "Jersey 10", sans-serif; 
+            text-align: center; 
+            margin-top: 20px; 
+        }
 
-            #gameArea {
-                position: relative;
-                width: 800px; 
-                height: 700px; 
-                border: 2px solid #333;
-                background-image: url('background.png'); 
-                background-size: cover; 
-                background-position: center; 
-                background-repeat: no-repeat;
-                overflow: hidden; 
-                margin: 20px auto; 
-            }
-            .enemy {
-                position: absolute;
-                width: 180px; 
-                height: 336px; 
-                background-image: url('MikeNormal.png'); 
-                background-size: contain; 
-                background-repeat: no-repeat; 
-                background-position: center; 
-                top: 20%; 
-                left: 55%; 
-                cursor: url('cursor1.cur'), auto; 
-            }
+        #gameArea {
+            position: relative;
+            width: 800px; 
+            height: 700px; 
+            border: 2px solid #333;
+            background-image: url('background.png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat;
+            overflow: hidden; 
+            margin: 20px auto; 
+        }
+        .enemy {
+            position: absolute;
+            width: 180px; 
+            height: 336px; 
+            background-image: url('/MikeSprite/idle1.png'); 
+            background-size: contain; 
+            background-repeat: no-repeat; 
+            background-position: center; 
+            top: 20%; 
+            left: 55%; 
+            cursor: url('cursor1.cur'), auto; 
+        }
 
         .healthBar {
             height: 20px;  
@@ -96,21 +96,18 @@
             <div class="col-2"></div>
             <div class="col-8">
                 <div class="row">
-                    <div id="title"  >
-                        <h>Mahej's Boxing Gym</h>
+                    <div id="title">
+                        <h1>Mahej's Boxing Gym</h1>
                     </div>
                 </div>
                 <div class="row">
                     <div id="gameArea">
-                        
-                        <div id= "ui" class="row">
-                            
+                        <div id="ui" class="row">
                             <div class="col-5">
                                 <div id="uiBorder">
                                     <div id="fn"><p class="no-margin">PLAYER</p></div>
                                     <div id="playerHealth" class="healthBar bg-success" style="width: 100%;"></div>
                                 </div>
-
                             </div>
                             <div class="col-2 text-center">
                                 <div id="clock" class="middleclock"> 69 </div>
@@ -119,13 +116,9 @@
                                 <div id="uiBorder">
                                     <div id="fn"><p class="no-margin">TYSON</p></div>
                                     <div id="enemyHealth" class="healthBar bg-success" style="width: 100%;"></div>
-                                    
                                 </div>
                             </div>
-                            
-                            
                         </div>
-                        
                         <div id="enemy" class="enemy"></div>
                     </div>
                 </div>
@@ -140,103 +133,13 @@
         </div>
     </div>
 
+    <script src="gameMechanics.js"></script>
+    <script src="enemyBehavior.js"></script>
     <script>
-        const enemy = document.getElementById('enemy');
-        const statusDisplay = document.getElementById('status');
-        const actionMessage = document.getElementById('actionMessage');
-        let isDefending = false;
-        let playerHealth = 100;
-        let enemyHealth = 100;
-        let isClicked = false; 
         
-
-        
-        function updateHealthBars() {
-        const playerHealthBar = document.getElementById('playerHealth');
-        const enemyHealthBar = document.getElementById('enemyHealth');
-
-        playerHealthBar.style.width = playerHealth + '%';
-        enemyHealthBar.style.width = enemyHealth + '%';
-
-        
-        playerHealthBar.className = 'healthBar'; 
-        if (playerHealth < 20) {
-            playerHealthBar.classList.add('bg-danger');
-        } else if (playerHealth < 50) {
-            playerHealthBar.classList.add('bg-warning');
-        } else {
-            playerHealthBar.classList.add('bg-success');
-        }
-
-        
-        enemyHealthBar.className = 'healthBar'; 
-        if (enemyHealth < 20) {
-            enemyHealthBar.classList.add('bg-danger');
-        } else if (enemyHealth < 50) {
-            enemyHealthBar.classList.add('bg-warning');
-        } else {
-            enemyHealthBar.classList.add('bg-success');
-        }
-        }
-
-        
-        function startAttackDefenseCycle() {
-            setInterval(() => {
-                if (!isDefending) {
-                    isDefending = true;
-                    actionMessage.innerText = 'Enemy is defending!';
-                    enemy.style.backgroundImage = "url('MikeDeff.png')"; 
-                    setTimeout(() => {
-                        isDefending = false;
-                        actionMessage.innerText = 'Enemy is attacking!';
-                        enemy.style.backgroundImage = "url('MikeNormal.png')"; 
-                    }, 2000); 
-                }
-            }, 5000); 
-        }
-
-        enemy.addEventListener('click', function() {
-    if (isDefending) {
-        actionMessage.innerText = 'The enemy is defending! You cannot hit them.';
-    } else {
-        actionMessage.innerText = 'You hit the enemy!'; 
-        enemyHealth -= 10; 
-        if (enemyHealth < 0) enemyHealth = 0; 
-        updateHealthBars(); 
-    }
-});
-
-        document.addEventListener('keydown', function(event) {
-            if (event.code === 'Space') {
-                if (isDefending) {
-                    actionMessage.innerText = 'You are already defending!';
-                } else {
-                    isDefending = true;
-                    actionMessage.innerText = 'You are defending!';
-                    setTimeout(() => {
-                        isDefending = false;
-                        actionMessage.innerText = 'You are back to attacking!';
-                    }, 2000); 
-                }
-            }
-        });
-
-        enemy.addEventListener('mousedown', function() {
-        enemy.style.cursor = "url('cursor2.cur'), auto"; 
-        });
-
-        
-        enemy.addEventListener('mouseup', function() {
-            enemy.style.cursor = "url('cursor1.cur'), auto"; 
-        });
-
-        
-        enemy.addEventListener('mouseleave', function() {
-            enemy.style.cursor = "url('cursor1.cur'), auto"; 
-        });
-
         updateHealthBars();
         startAttackDefenseCycle();
+        startIdleAnimation(); 
     </script>
 </body>
 </html>
