@@ -28,3 +28,4 @@ function updateHealthBars() {
         enemyHealthBar.classList.add('bg-success');
     }
 }
+

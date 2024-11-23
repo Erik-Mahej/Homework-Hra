@@ -22,14 +22,32 @@ function startIdleAnimation() {
                 enemy.style.backgroundImage = `url('${idleImages[currentIdleImageIndex]}')`;
                 currentIdleImageIndex = (currentIdleImageIndex + 1) % idleImages.length; 
             }
-        }, 200); 
+        }, 300); 
     }
 }
 
 function stopIdleAnimation() {
-   
+    
     clearInterval(idleAnimationInterval);
     idleAnimationInterval = null; 
+}
+
+function showHitAnimation() {
+    
+    const hitImages = ['MikeSprite/hit1.png', 'MikeSprite/hit2.png'];
+    const randomHitImage = hitImages[Math.floor(Math.random() * hitImages.length)];
+    
+    
+    enemy.style.backgroundImage = `url('${randomHitImage}')`;
+    
+    
+    setTimeout(() => {
+        if (!isDefending) {
+            enemy.style.backgroundImage = "url('MikeSprite/idle1.png')"; 
+        } else {
+            enemy.style.backgroundImage = "url('MikeSprite/MikeDefend.png')"; 
+        }
+    }, 500); 
 }
 
 function startAttackDefenseCycle() {
@@ -46,24 +64,34 @@ function startAttackDefenseCycle() {
                 startIdleAnimation(); 
             }, 2000); 
         }
-    }, 10000); 
+    }, 5000); 
 }
 
 
 enemy.addEventListener('click', function() {
+    const blockChance = 0.5; 
+    const randomValue = Math.random(); 
+
     if (isDefending) {
         actionMessage.innerText = 'The enemy is defending! You cannot hit them.';
     } else if (!canHitEnemy) {
         actionMessage.innerText = 'You need to wait before hitting again!';
+    } else if (randomValue < blockChance) {
+        actionMessage.innerText = 'The enemy blocked your attack!'; 
+        enemy.style.backgroundImage = "url('MikeSprite/MikeDefend.png')"; 
+        setTimeout(() => {
+            enemy.style.backgroundImage = "url('MikeSprite/idle1.png')"; 
+        }, 500); 
     } else {
         actionMessage.innerText = 'You hit the enemy!'; 
         enemyHealth -= 10; 
         if (enemyHealth < 0) enemyHealth = 0; 
         updateHealthBars(); 
+        showHitAnimation(); 
         canHitEnemy = false; 
         setTimeout(() => {
             canHitEnemy = true; 
-        }, 1000); 
+        },  1000); 
     }
 });
 
