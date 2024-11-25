@@ -32,8 +32,8 @@ body {
     background-size: contain; 
     background-repeat: no-repeat; 
     background-position: center; 
-    bottom: 15%; 
-    left: 25%; 
+    bottom: 5%; 
+    left: 40%; 
     z-index: 10;
 }
 .enemy {
@@ -45,7 +45,7 @@ body {
     background-repeat: no-repeat; 
     background-position: center; 
     top: 20%; 
-    left: 55%; 
+    left: 50%; 
     top: 15%; 
     left: 47%; 
     cursor: url('assets/cursor1.cur'), auto;
@@ -94,7 +94,8 @@ body {
 .warningat{
     font-size: 100px;
     position: absolute;
-    left: 30%;
+    top: 65%;
+    left: 20%;
     color: red;
 }
 
@@ -109,6 +110,9 @@ body {
     height: 700px;
     max-width: 800px; 
     margin: 20px auto; 
+    overflow: hidden;
+    border: solid;
+    border-radius: 3px;
 }
 
 #blackOverlay {
@@ -137,7 +141,6 @@ body {
     left: 50%; 
     transform: translate(-50%, -50%); 
     z-index: 2; 
-    max-width: 80%; 
     height: auto; 
 }
 
@@ -147,7 +150,6 @@ body {
     left: 50%; 
     transform: translate(-50%, -50%); 
     z-index: 2; 
-    max-width: 80%; 
     height: auto; 
 }
 
@@ -167,3 +169,64 @@ body {
     display: none; 
     z-index: 10; 
 }
+#referee{
+    display: none;
+    position: absolute;
+    top: 35%;
+    right: 0;
+    z-index: 10;
+    
+}
+
+#sliderbox{
+    position: absolute;
+    margin-top: 130px;
+    color: white;
+    z-index: 10;
+    width: 500px;
+    font-size: 50px;
+    font-family: "Jersey 10", sans-serif; 
+    text-align: center; 
+}
+
+.slider {
+    -webkit-appearance: none;
+    
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #ff0000;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #04AA6D;
+    cursor: pointer;
+  }
+  #status{
+    display: none;
+  }
+#enemyHealth{
+  --bs-bg-opacity: 1;
+  background-color: green;
+}
+#playerHealth{
+    --bs-bg-opacity: 1;
+    background-color: green;
+  }

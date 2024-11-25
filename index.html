@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mahej Gym</title>
+    <title>Punch Out!!</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
             <div class="col-8">
                 <div class="row">
                     <div id="title">
-                        <h1>Mahej's Boxing Gym</h1>
+                        <h1>Punch Out!!</h1>
                     </div>
                 </div>
                 <div class="row">
@@ -45,22 +45,37 @@
                                     </div>
                                 </div>
                             </div>
+                            <div id="referee">
+                                <img id="refereeImage" src="assets/referee1.png" alt="Referee" >
+                            </div>
                             <div id="attackWarning" class="warningat" style="display: none;">!</div>
                             <div id="player" class="player"></div>
                             <div id="enemy" class="enemy"></div>
-                            <div id="status" class="mb-2">
-                                <div>Status: Attack</div>
-                                <div id="actionMessage"></div>
-                            </div>
                         </div>
                         <div id="cutscene" style="display: none;">
                             <img id="cutsceneImage" src="assets/intro2.png" />
                         </div>
                         <div class="button-container">
                         <button id="startButton">Start Game</button>
+                        <div id="sliderbox">
+                        <label for="difficultySlider">Select Difficulty:</label>
+                        <input type="range" class="slider" id="difficultySlider" min="1" max="10" value="5" />
+                        <span id="difficultyValue">5</span>
+                    </div>
+                    </div>
                         <img id="playerLoseImage" src="assets/bending.png" style="display:none;">
                         <img id="enemyLoseImage" src="assets/gending.png" style="display:none;">
                     </div>
+                    </div>
+                    
+                </div>
+                <div class="row">
+                    <div>
+                        
+                        <div id="status" class="mb-2">
+                            <div>Status: Attack</div>
+                            <div id="actionMessage"></div>
+                        </div>
                     </div>
                 </div>
             </div>
