@@ -6,9 +6,9 @@ const playerElement = document.getElementById('player');
 const cutscene = document.getElementById('cutscene');
 const gameArea = document.getElementById('gameArea');
 const enemy = document.getElementById('enemy');
+const DODGE_DISTANCE = 200; 
 const RIGHT_BOUNDARY = DODGE_DISTANCE;
 const LEFT_BOUNDARY = -DODGE_DISTANCE; 
-const DODGE_DISTANCE = 200; 
 const dodgeChance = 0.7;
 
 
