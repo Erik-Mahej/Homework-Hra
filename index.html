@@ -16,14 +16,15 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
+            <div class="col-2  d-none d-sm-block"></div>
+            <div class="col-8 col-sm-12 style="min-width: 800px; max-width: 800px;">
                 <div class="row">
                     <div id="title">
                         <h1>Punch Out!!</h1>
                     </div>
                 </div>
                 <div class="row">
+                    <div id="fullArea">
                     <div id="gameContainer">
                         <img id="startImage" src="assets/intro1.png" alt="Start Image" />
                         <div id="blackOverlay"></div>
@@ -36,7 +37,7 @@
                                     </div>
                                 </div>
                                 <div class="col-2 text-center">
-                                    <div id="clock" class="middleclock"> 69 </div>
+                                    <div id="clock" class="middleclock"> 0 </div>
                                 </div>
                                 <div class="col-5">
                                     <div id="uiBorder">
@@ -67,21 +68,21 @@
                         <img id="enemyLoseImage" src="assets/gending.png" style="display:none;">
                     </div>
                     </div>
-                    
                 </div>
-                <div class="row">
-                    <div>
-                        
-                        <div id="status" class="mb-2">
-                            <div>Status: Attack</div>
-                            <div id="actionMessage"></div>
+                    <div class="row">
+                        <div>
+                            
+                            <div id="status" class="mb-2">
+                                <div>Status: Attack</div>
+                                <div id="actionMessage"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-2"></div>
+                <div class="col-2 d-none d-sm-block"></div>
         </div>
     </div>
+    
 
     <script src="script.js"></script>
 </body>

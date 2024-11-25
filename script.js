@@ -105,12 +105,11 @@ function startGame() {
     startSlider.style.display = 'none'; 
     document.getElementById('startImage').style.display = 'none'; 
     cutscene.style.display = 'block'; 
-    playCutscene(); //zahraje se cutscena
-    //tady se nastavuje difficulty enemy
-    const difficultyLevel = parseInt(difficultySlider.value);   //tady se nastavuje difficulty enemy
+    playCutscene(); 
+
+    const difficultyLevel = parseInt(difficultySlider.value);
     adjustEnemyDifficulty(difficultyLevel);
 }
-
 //funkce na difficulty
 
 function adjustEnemyDifficulty(difficultyLevel) {
@@ -170,6 +169,8 @@ function initializeGame() {
     startPlayerIdleAnimation();
     startAttackDefenseCycle(); 
     enemyAttackInterval = setInterval(enemyAttack, 4000); //rychlost utoku
+    elapsedTime = 0;
+    gameClockInterval = setInterval(updateClock, 1000);
 }
 
 function resetGame() {
@@ -328,7 +329,7 @@ function showPlayerAttackAnimation() {
     //reset na idle animaci
     setTimeout(() => {
         startPlayerIdleAnimation();
-    }, 500); //po jake dobe je reset
+    }, 750); //po jake dobe je reset
 }
 
 //funkce co zarizuji ze hrac defendi jen kdyz drzi mezernik
@@ -395,6 +396,7 @@ function enemyAttack() {
 
 
 function playerLoses() {
+    clearInterval(gameClockInterval);
     cancelAllAnimations(); //vypne vsechny animace
     gameStarted = false; 
     gameOver = true; 
@@ -413,11 +415,15 @@ function playerLoses() {
         gameArea.style.display = 'none'; 
         document.getElementById('playerLoseImage').style.display = 'block'; 
         console.log("Player has lost the game!");
+        setTimeout(() => {
+            alert(`Round completed in ${elapsedTime} seconds!`);
+        }, 3000);
     }, 5000);
 }
 
 //druha funkce je stejne jen pro enemy
 function enemyLoses() {
+    clearInterval(gameClockInterval);
     cancelAllAnimations(); 
     gameStarted = false; 
     gameOver = true; 
@@ -432,9 +438,12 @@ function enemyLoses() {
     setTimeout(() => {
         gameArea.style.display = 'none'; 
         document.getElementById('enemyLoseImage').style.display = 'block'; 
-
         console.log("Enemy has lost the game!");
+        setTimeout(() => {
+            alert(`Round completed in ${elapsedTime} seconds!`);
+        }, 3000);
     }, 5000);
+    
 }
 
 
@@ -474,4 +483,18 @@ function cancelAllAnimations() {
     canHitEnemy = true;
     resetGame();
     actionMessage.innerText = 'All animations canceled.';
+}
+
+//tohle zakaze selectit veci na strance
+document.addEventListener('selectstart', function(e) {
+    e.preventDefault();
+});
+
+//hodiny
+let elapsedTime = 0; 
+const clockElement = document.getElementById('clock'); 
+
+function updateClock() {
+    elapsedTime++; 
+    clockElement.innerText = elapsedTime; 
 }
