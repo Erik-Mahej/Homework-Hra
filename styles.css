@@ -3,7 +3,7 @@ body {
     font-family: "Roboto", sans-serif; 
     overflow: auto; 
     margin: 0;
-    overflow: hidden;
+    overflow-y: scroll;
     user-select: none; 
     -webkit-user-select: none; 
     -moz-user-select: none; 
@@ -247,4 +247,9 @@ body {
   
 #exl{
 max-width: 55px;
+}
+#manual{
+    text-align: center;
+    font-size: 30px;
+    font-family: "Jersey 10", sans-serif; 
 }
