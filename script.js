@@ -30,7 +30,7 @@ let gameOver = false;
 let enemyHealth = 100; 
 let Chance = 0.5; 
 let canHitEnemy = true;
-
+let enemyHealthOriginal = 100;
 const idleImages = [
     'MikeSprite/idle1.png',
     'MikeSprite/idle2.png',
@@ -54,21 +54,26 @@ const refereeImages = [
     'assets/referee4.png'
 ];
 
-
-
+//funkce na pocitani podilu originalnich hp a soucasnych
+function devide(enemyHealthOriginal,enemyHealth){
+    let RealEnemyHealth = enemyHealth / enemyHealthOriginal;
+    return RealEnemyHealth;
+}
 
 
 //funkce na health bary
 function updateHealthBars() {
     const playerHealthBar = document.getElementById('playerHealth');
     const enemyHealthBar = document.getElementById('enemyHealth');
-
+    
     //nastavi pocet hp na %
     playerHealthBar.style.width = playerHealth + '%';
 
-    const enemyHealthPercentage = Math.min(enemyHealth, 100); 
-    enemyHealthBar.style.width = enemyHealthPercentage + '%'; 
+    let result = devide(enemyHealthOriginal,enemyHealth)
 
+    const enemyHealthPercentage = result * 100; 
+    enemyHealthBar.style.width = enemyHealthPercentage + '%'; 
+   
     //tady se meni barvy podle toho kolik hp maji
     if (playerHealth < 50) playerHealthBar.style.backgroundColor = 'orange';
     if (playerHealth < 20) playerHealthBar.style.backgroundColor = 'red';
@@ -113,6 +118,7 @@ function startGame() {
 //funkce na difficulty
 
 function adjustEnemyDifficulty(difficultyLevel) {
+    enemyHealthOriginal = 100 + (difficultyLevel * 10);
     enemyHealth = 100 + (difficultyLevel * 10); 
     enemyAttackPower = 10 + difficultyLevel; 
     enemyBlockChance = 0 + (difficultyLevel * 0.05); 
